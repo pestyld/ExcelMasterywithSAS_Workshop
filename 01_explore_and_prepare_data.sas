@@ -13,7 +13,7 @@
 /* 2. MAKE A CONNECTION TO THE EXCEL WORKBOOK */
 /**********************************************/
 
-/* Store the path of the root folder */
+/* Store the path of the root workshop folder dynamically (program must be saved for this to work)*/
 %let fileName =  /%scan(&_sasprogramfile,-1,'/');
 %let path = %sysfunc(tranwrd(&_sasprogramfile, &fileName,));
 
@@ -27,7 +27,7 @@ libname xl xlsx "&path/data/emp_info.xlsx";
 /* 3. PREVIEW TABLES            */
 /********************************/
 
-/* Macro will preview 5 rows and view the column metadata */
+/* Macro will preview 5 rows and view the column metadata of each worksheet */
 %macro table_preview(table, n=5);
 	/* Preview table */
 	title height=18pt color=Blue "TABLE: %upcase(&table)";
@@ -61,22 +61,25 @@ proc sql;
 quit;
 
 
-/* Look for duplicate lookup values in the xl.empinfo worksheet */
-proc freq data=xl.empinfo order=freq noprint;
-	tables IDNUM / out=work.empinfo_dups(where=(Count>1));
-run;
 
+proc sql;
+/* Look for duplicate lookup values in the xl.empinfo worksheet */
+	select IDNUM, count(*) as IDNUM_XL_EMPINFO
+	from xl.empinfo
+	group by IDNUM
+	having calculated IDNUM_XL_EMPINFO > 1;
 
 /* Look for duplicate lookup values in the xl.salary worksheet */
-proc freq data=xl.salary order=freq noprint;
-	tables IDNUM / out=work.salary_dups(where=(Count>1));
-run;
+	select IDNUM, count(*) as IDNUM_XL_SALARY
+	from xl.salary
+	group by IDNUM
+	having calculated IDNUM_XL_SALARY > 1;
 
-
-/* Look for duplicate lookup values in the xl.jobcodes worksheet */
-proc freq data=xl.jobcodes order=freq noprint;
-	tables jobcode / out=work.jobcodes_dups(where=(Count>1));
-run;
+	select JOBCODE, count(*) as IDNUM_XL_JOBCODES
+	from xl.jobcodes
+	group by JOBCODE
+	having calculated IDNUM_XL_JOBCODES > 1;
+quit;
 
 
 
@@ -101,7 +104,7 @@ run;
 proc sql;
 create table work.emp_info_all as
 	select emp.NAME label='Name',
-		   emp.IDNUM label='Identification Number' format=SSN11.,
+		   put(emp.IDNUM,SSN11.) as IDNUM label='Identification Number',
 		   emp.EMPNO label='Employee Number',
 		   emp.DIVISION label='Division',
 		   emp.JOBCODE label='Job Code',
@@ -109,17 +112,18 @@ create table work.emp_info_all as
 		   sal.SALARY label='Salary' format=dollar20.2,
 		   emp.HDATE label='Hire Date',
 		   floor(yrdif(emp.HDATE,mdy(1,1,2023),'age')) as EMPYOS label='Years of Service',
-		   sal.ENDDATE label='End Date',
 		   emp.STATUS label='Status',
 		   emp.GENDER label='Employee Gender',
 		   emp.EDLEV label='Education Level',
 		   emp.LOCATION label='Office Location',
 		   emp.PHONE label='Extension Number',
 		   emp.ROOM label='Office Location',
+		   emp.TODAYS_DATE label="Today's Date",
 		   leave.LVTYPE label='Type of Leave',
            leave.LVNOTES label='Notes About Leave',
 		   leave.LVBEGDTE label='Leave Begin Date', 
-		   leave.LVENDDTE label='Leave End Date', 
+		   leave.LVENDDTE label='Leave End Date',
+		   leave.LVENDDTE - leave.LVBEGDTE as LVDAYS label='Leave Days',
            leave.PRPERCNT label='Payroll Percentage',
 		   case
 				when leave.LVTYPE is null then . 
@@ -129,25 +133,36 @@ create table work.emp_info_all as
     	left join work.jobcodes as job on emp.jobcode = job.jobcode
 	    left join xl.salary as sal on emp.idnum = sal.idnum
 	    left join xl.leave as leave on emp.idnum = leave.idnum
-	order by Division, Name;
+	order by Division, Salary;
 
 	/* Count number of rows in final table */
 	select count(*) as NumRows_Final_Table from work.emp_info_all;
 
 	/* View final table */
-	select * from work.emp_info_all;
+	title "FINAL EMP_INFO_ALL TABLE";
+	select * from work.emp_info_all(obs=10);
 quit;
 
 
-
 /* Create ACTIVE and LEAVE tables */
-data work.emp_active(drop=LVTYPE LVNOTES LVBEGDTE LVENDDTE PRPERCNT LVSALARY) 
+data work.emp_active(drop=LVTYPE LVNOTES LVBEGDTE LVENDDTE PRPERCNT LVSALARY LVDAYS) 
      work.emp_leave;
 	set work.emp_info_all;
 	if LVTYPE = '' then output work.emp_active;
-		else output work.emp_leave;
+	else output work.emp_leave;
 run;
+
+/* Sort leave data */
+proc sort data=work.emp_leave;
+	by descending LVBEGDTE;
+run;
+
+title "PREVIEW WORK.EMP_ACTIVE TABLE";
 proc print data=work.emp_active(obs=5);
 run;
+title;
+
+title "PREVIEW WORK.EMP_LEAVE TABLE";
 proc print data=work.emp_leave(obs=5);
 run;
+title;

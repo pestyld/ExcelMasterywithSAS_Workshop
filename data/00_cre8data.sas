@@ -27,14 +27,26 @@
 /**************************************************/
 /*  CREATE EMP_INFO.XLSX FILE IN THE DATA FOLDER  */
 /**************************************************/
+/* Use the SAMPSIO default SAS library to create the XLSX workbook */
+/* - Modify the years to more current years                        */
+/* - Increase salary by 30%                                        */
+
 libname xlout xlsx "&data_path/emp_info.xlsx";
 
 data xlout.empinfo;
 	set sampsio.empinfo;
+	call streaminit(1);
+	addYears=rand('uniform',10,29);
+	HDATE=mdy(month(HDATE),day(HDATE),YEAR(HDATE)+addYears);
+	BIRTHDAY=mdy(month(BIRTHDAY), day(BIRTHDAY), year(BIRTHDAY)+addYears);
+	TODAYS_DATE=mdy(04,01,2024);
+	format TODAYS_DATE date9.;
+	drop addYears;
 run;
 
 data xlout.salary;
 	set sampsio.salary;
+	SALARY = SALARY * 1.40;
 run;
 
 data xlout.jobcodes;
@@ -43,6 +55,11 @@ run;
 
 data xlout.leave;
 	set sampsio.leave;
+	call streaminit(1);
+	LEAVEDAYS=rand('uniform',14,120);
+	LVBEGDTE=mdy(rand('uniform',1,4),day(LVBEGDTE),2024);	
+	LVENDDTE=LVBEGDTE+LEAVEDAYS;
+	drop LEAVEDAYS;
 run;
 
 libname xlout clear;
