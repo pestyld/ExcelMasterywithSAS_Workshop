@@ -1,0 +1,26 @@
+{
+    "Title": "HR Employee Data Overview",
+    "WorkbookDescription": "Welcome to our HR Employee Data Analysis Workbook! This comprehensive Excel tool has been meticulously designed to streamline the process of analyzing and managing our human resources data effectively. This workbook serves as a user-friendly hub for organizing, interpreting, and gaining valuable insights from our employee data. With dedicated sheets for employee information, company headcount, division metrics, and more, you can effortlessly track and evaluate key HR indicators.",
+    "CreatedBy":"Peter Styliadis",
+    "Department":"Education",
+    "Phone":"555-555-0000",
+    "Email":"Peter@myemail.com",
+    "Worksheets": [
+        {
+            "WorksheetName": "Employee List",
+            "Description": "Information about each employee."
+        },
+        {
+            "WorksheetName": "Company Overview",
+            "Description": "Provides overall information about company headcount, location, active employees, total employees on leave, average years of service and total employess hired by year."
+        },
+        {
+            "WorksheetName": "Division Analysis",
+            "Description": "Provides salary, employee head count, and a list of each employee by division."
+        },
+        {
+            "WorksheetName": "Employee Leave",
+            "Description": "Provides information regarding employees on leave."
+        }
+    ]
+}
