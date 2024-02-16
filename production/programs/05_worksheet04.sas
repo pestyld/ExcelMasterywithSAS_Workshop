@@ -8,11 +8,9 @@
 /**********************/
 /* OUTPUT TO EXCEL    */
 /**********************/
-ods excel file = "&outpath/worksheet_04.xlsx";
-
 ods excel options(
 			  sheet_name = 'Division Analysis'       /*<--- specifies the name for the next worksheet */
-              sheet_interval = 'NONE'                /*<--- create a new worksheet */
+              sheet_interval = 'NOW'                 /*<--- create a new worksheet */
               suppress_bylines = 'ON'                /*<--- remove by lines from PROC REPORT by groups */
               absolute_column_width = '0'            /*<--- reset the column widths */
               row_heights = '30,20,20,20,20,20,20'   /*<--- specifies the height of the row using positional parameters */
@@ -20,9 +18,6 @@ ods excel options(
 			  frozen_headers = 'OFF'                 /*<--- turn off frozen headers */
               frozen_rowheaders = 'OFF'              /*<--- turn off row headers */
 	  	   );	
-		   
-/* Use PNG images */
-ods graphics / imagefmt=png;
 
 
 /**************************/
@@ -97,10 +92,3 @@ proc report data = work.emp_info_all;
 	                       suppress 
 	                       style={fontsize = 11pt fontweight = bold};
 run;
-
-
-
-/**********************/
-/* CLOSE EXCEL OUTPUT */
-/**********************/
-ods excel close;

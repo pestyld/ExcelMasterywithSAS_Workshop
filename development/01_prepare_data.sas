@@ -2,16 +2,25 @@
 /* 01 PREPARE DATA                   */
 /*************************************/
 
+/*****************************************************/
+/* 1. DOWNLOAD AND OPEN THE EXCEL WORKBOOK           */
+/*****************************************************/
+/* Main folder > data > 2024M04_emp_info_raw.xlsx    */
+/*****************************************************/
+
+
+
 /*************************************/
-/* 1. CONNECT TO THE EXCEL WORKBOOK  */
+/* 2. CONNECT TO THE EXCEL WORKBOOK  */
 /*************************************/
-/* Make a connection to the emp_info.xlsx workbook */
-libname xl xlsx "&path/data/2024M04_emp_info_raw.xlsx";
+
+/* Make a connection to the current emp_info.xlsx workbook */
+libname xl xlsx "&path/data/&currMonthYear._emp_info_raw.xlsx";
 
 
 
 /********************************/
-/* 1. REMOVE DUPLICATES         */
+/* 3. REMOVE DUPLICATES         */
 /********************************/
 /* Remove duplicates jobcodes from the xl.jobcodes worksheet and create a SAS table */
 proc sort data=xl.jobcodes     /* Read from Excel */
@@ -22,14 +31,15 @@ run;
 
 
 
-/********************************/
-/* 2. PREPARE FINAL TABLE       */
-/********************************/
-/* Perform a join of the following tables */
-/* - xl.empinfo    */
-/* - work.jobcodes */
-/* - xl.salary     */
-/* - xl.leave      */
+/******************************************
+ 4. PREPARE FINAL TABLE                
+*******************************************
+ Perform a join of the following tables 
+ - xl.empinfo                           
+ - work.jobcodes                        
+ - xl.salary                            
+ - xl.leave                             
+*******************************************/
 
 proc sql;
 create table work.emp_info_all as
@@ -84,30 +94,21 @@ quit;
 
 
 /****************************************/
-/* 3. PREPARE ACTIVE AND LEAVE TABLES   */
+/* 5. CREATE THE LEAVE TABLE            */
 /****************************************/
-/* Create ACTIVE and LEAVE tables */
-data work.emp_active(drop=LVTYPE LVNOTES LVBEGDTE LVENDDTE PRPERCNT LVSALARY LVDAYS) 
-     work.emp_leave;
+/* Create the leave table */
+data work.emp_leave;
 	set work.emp_info_all;
-	if LVTYPE = '' then output work.emp_active;
-	else output work.emp_leave;
+	where EMP_STATUS = 'On Leave';
 run;
 
-
 /* Sort leave data */
-proc sort data=work.emp_leave;
+proc sort data = work.emp_leave;
 	by descending LVBEGDTE;
 run;
 
-
-/* Preview tables */
-title "PREVIEW WORK.EMP_ACTIVE TABLE";
-proc print data=work.emp_active(obs=5);
-run;
-title;
-
+/* View leave table */
 title "PREVIEW WORK.EMP_LEAVE TABLE";
-proc print data=work.emp_leave(obs=5);
+proc print data = work.emp_leave;
 run;
 title;

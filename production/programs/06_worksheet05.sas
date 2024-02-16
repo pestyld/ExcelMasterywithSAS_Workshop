@@ -8,17 +8,11 @@
 /*******************************************************/
 /* EXCEL OUTPUT                                        */
 /*******************************************************/
-ods excel file = "&outpath/worksheet_05.xlsx";
-
-
 ods excel options(sheet_name = 'Employee Leave'
-                  sheet_interval = 'NONE'
+                  sheet_interval = 'NOW'
                   autofilter = 'ALL'
                   row_heights = '30,20,20,20,20,20,20' 
 				  flow = "TABLES");
-
-/* Use PNG images */
-ods graphics / imagefmt=png;
 
 
 /**************************/
@@ -106,10 +100,3 @@ proc sgplot data = work.emp_leave
 run;
 title;
 ods graphics / reset = width reset = height;
-
-
-
-/**********************/
-/* CLOSE EXCEL OUTPUT */
-/**********************/
-ods excel close;
