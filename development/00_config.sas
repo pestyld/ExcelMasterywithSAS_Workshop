@@ -17,10 +17,10 @@
 %let data_path = &path./data;
 
 /* Program path */
-%let program_path = &path./development;
+%let dev_path = &path./development;
 
 /* Specify Excel file output folder */
-%let outpath = &program_path./output;
+%let dev_outpath = &dev_path./output;
 
 
 
@@ -60,6 +60,8 @@
 /***********************/
 %macro worksheet_title(title_string);
 	proc odstext;
-		p &title_string / style = [color = &sasDarkBlue fontsize = &ws_title_text];
+		p &title_string / style = [color = &sasDarkBlue 
+                                   fontsize = &ws_title_text 
+                                   tagattr = 'mergeacross:5'];
 	quit;
 %mend;

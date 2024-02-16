@@ -8,7 +8,7 @@
 /**********************/
 /* OUTPUT TO EXCEL    */
 /**********************/
-ods excel file = "&outpath/worksheet_04.xlsx";
+ods excel file = "&dev_outpath/worksheet_04.xlsx";
 
 ods excel options(
 			  sheet_name = 'Division Analysis'       /*<--- specifies the name for the next worksheet */

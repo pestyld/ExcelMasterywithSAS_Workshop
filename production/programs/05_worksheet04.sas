@@ -18,6 +18,9 @@ ods excel options(
 			  frozen_headers = 'OFF'                 /*<--- turn off frozen headers */
               frozen_rowheaders = 'OFF'              /*<--- turn off row headers */
 	  	   );	
+		   
+/* Use PNG images */
+ods graphics / imagefmt=png;
 
 
 /**************************/

@@ -15,7 +15,7 @@
 /*************************************/
 
 /* Make a connection to the current emp_info.xlsx workbook */
-libname xl xlsx "&path/data/&currMonthYear._emp_info_raw.xlsx";
+libname xl xlsx "&data_path/&currMonthYear._emp_info_raw.xlsx";
 
 
 

@@ -52,6 +52,8 @@
 /* Worksheet title and section text */
 %macro worksheet_title(title_string);
 	proc odstext;
-		p &title_string / style = [color = &sasDarkBlue fontsize = &ws_title_text];
+		p &title_string / style = [color = &sasDarkBlue 
+                                   fontsize = &ws_title_text 
+                                   tagattr = 'mergeacross:5'];
 	quit;
 %mend;

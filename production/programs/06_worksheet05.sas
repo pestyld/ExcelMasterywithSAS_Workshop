@@ -14,6 +14,9 @@ ods excel options(sheet_name = 'Employee Leave'
                   row_heights = '30,20,20,20,20,20,20' 
 				  flow = "TABLES");
 
+/* Use PNG images */
+ods graphics / imagefmt=png;
+
 
 /**************************/
 /* WORKSHEET TITLE        */

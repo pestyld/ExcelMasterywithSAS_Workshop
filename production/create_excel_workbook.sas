@@ -10,24 +10,25 @@
 ************************************************************************************
  REQUIRED INPUT DATA                                                              
 ************************************************************************************
- 1. 2024M04_emp_info_raw.xlsx : main folder > data                                
+ 1. <DATE>_emp_info_raw.xlsx : main folder > data                                
     - Excel file contains all of the HR data from our systems. The default file    
-      name of the file is <YYYY>M<MM>_emp_info_raw for the year and month the      
-      data was extracted.                                                         
+      name is <YYYY>M<MM>_emp_info_raw for the year and month the data was extracted.                                                         
 ***********************************************************************************
  REQUIRED PROGRAM FILES                                                           
 ***********************************************************************************
- - 
- - 
- - 
- - 
- -
+ - 00_config.sas - Creates macro variables and programs for the Excel output.
+ - 01_prepare_data.sas - Prepares the <date>_emp_info_raw.xlsx file into SAS tables. 
+ - 02_worksheet01.sas - Creates the first worksheet with a workbook overview.
+ - 03_worksheet02.sas - List of all employees.
+ - 04_worksheet03.sas - Company overview information.
+ - 05_worksheet04.sas - Division analysis.
+ - 06_worksheet05.sas - Employee leave overview.
 ***********************************************************************************
 * OUTPUT FILES                                                                     
 ***********************************************************************************
- 1. 2024M02_HR_REPORT : main folder > final_project > final_excel_workbook        
-    - test Prepared data of ServiceNow third party data. Used to append to Midas  
-            tickets. Table is used temporarily (session scope)                    
+ 1. <DATE>_HR_REPORT.xlsx
+   - Location: main folder > production > output 
+   - Dynamically names the workbook using the month and year.
 ***********************************************************************************
   REQUIREMENT: SPECIFY MAIN FOLDER PATH                                       
 ***********************************************************************************/
@@ -35,18 +36,18 @@
 %let folder_path = C:/Users/pestyl/OneDrive - SAS/github repos/ExcelMasterywithSAS_Workshop;
 
 
+
+
 /**************************************************/
 /* CUSTOM SETTINGS                                */
 /**************************************************/
-%include "&production_path./programs/00_config.sas";
-
+%include "&folder_path/production/programs/00_config.sas";
 
 /**********************/
 /* PREPARE DATA       */
 /**********************/
 /* Program will read from the raw Excel data (main folder > data) and prepare the final tables in the WORK library */
 %include "&production_path./programs/01_prepare_data.sas";
-
 
 
 /**************************************************/

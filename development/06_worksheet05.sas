@@ -8,7 +8,7 @@
 /*******************************************************/
 /* EXCEL OUTPUT                                        */
 /*******************************************************/
-ods excel file = "&outpath/worksheet_05.xlsx";
+ods excel file = "&dev_outpath/worksheet_05.xlsx";
 
 
 ods excel options(sheet_name = 'Employee Leave'

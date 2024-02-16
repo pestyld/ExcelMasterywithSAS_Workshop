@@ -21,6 +21,10 @@ ods excel options(
 			  frozen_headers = 'OFF'                 /*<--- specifies that headers can scroll or not scroll with the scroll bar */
               frozen_rowheaders = 'OFF'              /*<--- specifies if the row headers are on the left scroll when the table data scrolls */
 	  	   );	
+		   
+/* Use PNG images */
+ods graphics / imagefmt=png;
+	
 
 /**************************/
 /* WORKSHEET TITLE        */
