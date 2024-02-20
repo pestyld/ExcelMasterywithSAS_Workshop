@@ -1,14 +1,14 @@
-/*************************************************
+/**********************************************************************************************************
  CREATE DATA FOR THE WORKSHOP                  
-**************************************************
+***********************************************************************************************************
  - Uses the sample sampsio library             
  - Should be available in your SAS enviornment
- - Creates the <date>_emp_info.xlsx file in your path
-**************************************************/
+ - Creates the <YYYY>M<MM>_emp_info_raw.xlsx workbook in your data folder with the current year and month
+***********************************************************************************************************/
 
-/*****************************************************************************/
-/* REQUIREMENT: Set the path to where you want to create the Excel workbook  */
-/*****************************************************************************/
+/*****************************************************************************
+ REQUIREMENT: Set the path to where you want to create the Excel workbook  
+*****************************************************************************/
 %let data_path = C:/Users/pestyl/OneDrive - SAS/github repos/ExcelMasterywithSAS_Workshop/data;
 
 
@@ -17,19 +17,20 @@
   CREATE EMP_INFO.XLSX WORKBOOK IN THE SPECIFIED FOLDER          
 *******************************************************************
  Use the SAMPSIO default SAS library to create the XLSX workbook 
- - Modify the years to more current years                        
+ - Modifies the years to more current years                        
  - Increase salary by 30%                                        
- - Modify column metadata                                       
+ - Modifies column metadata                                       
 /*******************************************************************/
 /* Dynamically store today's year and month */
 %let currMonthYear = %sysfunc(today(), YYMM.);
 %put &=currMonthYear;
 
 
-/* Create Excel workbook: <YYYY><M<NN>_emp_info_raw.xlsx using the macro above */
+/* Create Excel workbook: <YYYY><M<NN>_emp_info_raw.xlsx using the macro above to name the file */
 libname xlout xlsx "&data_path/&currMonthYear._emp_info_raw.xlsx";
 
-/* Empinfo worksheet */
+
+/* Create the Empinfo worksheet */
 data xlout.empinfo;
 	set sampsio.empinfo;
 	call streaminit(11);
@@ -48,18 +49,18 @@ data xlout.empinfo;
 	drop addYears;
 run;
 
-/* salary worksheet */
+/* Create the salary worksheet */
 data xlout.salary;
 	set sampsio.salary;
 	SALARY = SALARY * 1.40;
 run;
 
-/* jobcodes worksheet */
+/* Create the jobcodes worksheet */
 data xlout.jobcodes;
 	set sampsio.jobcodes;
 run;
 
-/* leave worksheet */
+/* Create the leave worksheet */
 data xlout.leave;
 	set sampsio.leave;
 	call streaminit(1);
@@ -69,13 +70,16 @@ data xlout.leave;
 	drop LEAVEDAYS NAME;
 run;
 
+/* Close the libname */
 libname xlout clear;
 
 
 
-/********************************/
-/*  DELETES BAK FILE            */
-/********************************/
+/**********************************************************
+ DELETES BAK FILE
+ - Writing to an Excel workbook creates a .bak file. 
+   This script deletes that extra file
+**********************************************************/
 * If the bak files exists, delete using the FDELETE function *;
 * Reference the Excel workbook .bak file *;
 filename f_bak "&data_path/&currMonthYear._emp_info_raw.xlsx.bak";

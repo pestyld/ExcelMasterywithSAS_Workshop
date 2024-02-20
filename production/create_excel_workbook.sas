@@ -1,34 +1,35 @@
 /***********************************************************************************
  PROGRAM DESCRIPTION: Create Monthly Company HR Excel Report                      
 ************************************************************************************
- SUMMARY: Program prepares and uploads data for the third party legal data report.
-          Report can be found in All Reports -> Legal -> Third Party Reports.    
-          Report identifies all requested third party legal data. Program executes
-          as a job every day at 6AM (EST).                                        
- CREATED BY: Peter S                                                              
- DATE: 04/1/2024                                                                  
+ SUMMARY: This project automates the analysis of HR data by identifying the most 
+          recent HR emp_info_raw.xlsx file based on the current year and month. It then 
+          proceeds to execute all available SAS programs in the designated folder, consolidating 
+          the results into a comprehensive Excel workbook providing insights into our 
+          company's HR metrics.
+ CREATED BY: Peter S                                                             
+ DATE: 03/01/2024                                                                  
 ************************************************************************************
  REQUIRED INPUT DATA                                                              
 ************************************************************************************
- 1. <DATE>_emp_info_raw.xlsx : main folder > data                                
-    - Excel file contains all of the HR data from our systems. The default file    
+ 1. <YYYY>M<MM>_emp_info_raw.xlsx : main folder > data                                
+    - Excel file containing all HR data from our systems. The default file    
       name is <YYYY>M<MM>_emp_info_raw for the year and month the data was extracted.                                                         
 ***********************************************************************************
  REQUIRED PROGRAM FILES                                                           
 ***********************************************************************************
- - 00_config.sas - Creates macro variables and programs for the Excel output.
- - 01_prepare_data.sas - Prepares the <date>_emp_info_raw.xlsx file into SAS tables. 
- - 02_worksheet01.sas - Creates the first worksheet with a workbook overview.
- - 03_worksheet02.sas - List of all employees.
- - 04_worksheet03.sas - Company overview information.
- - 05_worksheet04.sas - Division analysis.
- - 06_worksheet05.sas - Employee leave overview.
+ - 00_config.sas       - Creates macro variables and programs used in the Excel output.
+ - 01_prepare_data.sas - Prepares the <YYYY>M<MM>_emp_info_raw.xlsx file into SAS tables. 
+ - 02_worksheet01.sas  - Creates the first worksheet with a workbook overview.
+ - 03_worksheet02.sas  - Creates the second worksheet with a list of all employees.
+ - 04_worksheet03.sas  - Creates the third worksheet with company overview information.
+ - 05_worksheet04.sas  - Creates the fourth worksheet with division analysis.
+ - 06_worksheet05.sas  - Creates the fifth worksheet with employee leave overview.
 ***********************************************************************************
 * OUTPUT FILES                                                                     
 ***********************************************************************************
- 1. <DATE>_HR_REPORT.xlsx
+ 1. <YYYY>M<MM>_HR_REPORT.xlsx
    - Location: main folder > production > output 
-   - Dynamically names the workbook using the month and year.
+   - Dynamically names the workbook using the month and year the program was run.
 ***********************************************************************************
   REQUIREMENT: SPECIFY MAIN FOLDER PATH                                       
 ***********************************************************************************/
@@ -46,7 +47,7 @@
 /**********************/
 /* PREPARE DATA       */
 /**********************/
-/* Program will read from the raw Excel data (main folder > data) and prepare the final tables in the WORK library */
+/* Program will read from the raw Excel data (main folder > data) and prepare the tables in the WORK library */
 %include "&production_path./programs/01_prepare_data.sas";
 
 

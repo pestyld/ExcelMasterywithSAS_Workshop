@@ -11,8 +11,20 @@ Join us for an immersive experience where data mastery meets reporting excellenc
 2. You will also have to modify **path** macro variable in the **development** > **00_config.sas** program to reference the location of your main project folder.
 3. You will also have to modify **folder_path** macro variable in the **production** > **create_excel_workbook.sas** program to reference the location of your main project folder.
 
-### Development Folder
-The development folder will create one worksheet at a time for testing purposes. Modify the path in the **config.sas** program to point to the project folder.
+## Folder descriptions
 
-### Production folder
-The production folder will have a single program that will create a single Excel workbook with all of the worksheets from development. Modify the **folder_path** macro variable in the **create_excel_workbook.sas** program to point to the project folder.
+### data 
+- The **data** folder contains the program to create the raw data (**cre8data.sas**), the raw Excel workbook used in the demonstration, and the **report_overview_config.xlsx** file. 
+- The **report_overview_config.xlsx** workbook stores information about the report and is used to create on of the worksheets. 
+
+### development
+The **development** folder will contain programs for the entire process. 
+- You will need to run each program incrementally. The programs will create one worksheet at a time for testing purposes. 
+- Modify the path in the **config.sas** program to point to the project folder. 
+- All Excel output will be placed in the **development** > **output** folder.
+
+### production
+- The **production** folder will have a single program named **create_excel_workbook.sas** that will create a single Excel workbook with all of the worksheets from development using those programs. 
+- The Modify the **folder_path** macro variable in the **create_excel_workbook.sas** program to point to the project folder. 
+- The programs from development are placed in the **production** > **programs** folder. Minor modifications were made to the programs to create a single Excel workbook.
+- The final workbook will be placed in the **production** > **output** folder.
