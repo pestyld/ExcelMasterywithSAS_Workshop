@@ -37,11 +37,11 @@
 
 
 
-
 /**************************************************/
-/* CUSTOM SETTINGS                                */
+/* CONFIGURATION FILE SETTINGS                    */
 /**************************************************/
 %include "&folder_path/production/programs/00_config.sas";
+
 
 /**********************/
 /* PREPARE DATA       */
@@ -59,12 +59,12 @@ ods _all_ close;
 /* Use PNG images */
 ods graphics / imagefmt=png;
 
-/* Write to Excel and create a **DYNAMIC WORKBOOK NAME**  */
+/* Write to Excel and create a workbook dynamically named <YYYY>M<MM>_HR_REPORT_FINAL.XLSX */
 ods excel file="&outpath/&currMonthYear._HR_REPORT_FINAL.xlsx" 
           options(sheet_interval ="NONE");
 
 
-/* Run the following programs. Each program creats a worksheet */
+/* Run the following programs. Each program creats a worksheet in the workbook */
 %include "&production_path./programs/02_worksheet01.sas";
 %include "&production_path./programs/03_worksheet02.sas";
 %include "&production_path./programs/04_worksheet03.sas";

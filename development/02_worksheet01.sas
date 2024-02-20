@@ -16,7 +16,7 @@
 
 
 /******************************************************/
-/* READ THE XLSX WORKBOOK REPORT OVERVIEW CONFIG FILE */
+/* READ THE report_overview_config.xlsx FILE          */
 /******************************************************/
 /* Read the xlsx file with information about the workbook and create SAS tables */
 libname xlconfig xlsx "&data_path/report_overview_config.xlsx";
@@ -33,15 +33,18 @@ run;
 /**********************/
 /* OUTPUT TO EXCEL    */
 /**********************/
+/* Create Excel workbook */
 ods excel file = "&dev_outpath/worksheet_01.xlsx" 
           options(sheet_name = "Workbook Overview");
 
  
-/* Workbook title and description using the XLSX overview worksheet */
+/* Add workbook title and description using the overview worksheet */
 proc odstext data = xlconfig.overview;
+	/* Workbook title */
 	p catx(' - ', Title, "&currMonthYear") / style = [color = &sasDarkBlue 
 	                                                  fontsize = &heading1_size 
 	                                                  tagattr = 'mergeacross:13'];
+	/* Workbook description */
 	p WorkbookDescription / style = [color = &sasDarkBlue 
 	                                 fontsize = &p_size 
 	                                 tagattr = 'mergeacross:13'];

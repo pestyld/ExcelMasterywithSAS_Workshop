@@ -1,5 +1,5 @@
 /*************************************/
-/* 00 CONFIG                         */
+/* 00 CONFIGURATION SET UP           */
 /*************************************/
 
 /***********************************************/
@@ -16,10 +16,10 @@
 /* Data path */
 %let data_path = &path./data;
 
-/* Program path */
+/* Development program path */
 %let dev_path = &path./development;
 
-/* Specify Excel file output folder */
+/* Development output folder */
 %let dev_outpath = &dev_path./output;
 
 

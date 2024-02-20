@@ -11,11 +11,13 @@
 ods excel file = "&dev_outpath/worksheet_05.xlsx";
 
 
-ods excel options(sheet_name = 'Employee Leave'
-                  sheet_interval = 'NONE'
-                  autofilter = 'ALL'
-                  row_heights = '30,20,20,20,20,20,20' 
-				  flow = "TABLES");
+ods excel options(
+				sheet_name = 'Employee Leave'
+                sheet_interval = 'NONE'
+                autofilter = 'ALL'
+                row_heights = '30,20,20,20,20,20,20' 
+				flow = "TABLES"
+			);
 
 /* Use PNG images */
 ods graphics / imagefmt=png;

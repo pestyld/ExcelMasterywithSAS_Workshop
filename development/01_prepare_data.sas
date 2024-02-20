@@ -5,7 +5,7 @@
 /*****************************************************/
 /* 1. DOWNLOAD AND OPEN THE EXCEL WORKBOOK           */
 /*****************************************************/
-/* Main folder > data > 2024M04_emp_info_raw.xlsx    */
+/* Main folder > data > <YYYY>M<MM>_emp_info_raw.xlsx*/
 /*****************************************************/
 
 
@@ -13,8 +13,7 @@
 /*************************************/
 /* 2. CONNECT TO THE EXCEL WORKBOOK  */
 /*************************************/
-
-/* Make a connection to the current emp_info.xlsx workbook */
+/* Make a connection to the current <YYYY>M<MM>_emp_info_raw.xlsx workbook */
 libname xl xlsx "&data_path/&currMonthYear._emp_info_raw.xlsx";
 
 
