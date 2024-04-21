@@ -34,7 +34,7 @@
   REQUIREMENT: SPECIFY MAIN FOLDER PATH                                       
 ***********************************************************************************/
 /* Specify the path to your main workshop folder */
-%let folder_path = C:/Users/pestyl/OneDrive - SAS/github repos/ExcelMasterywithSAS_Workshop;
+%let folder_path = C:/your/project/folder/location/ExcelMasterywithSAS_Workshop;
 
 
 
