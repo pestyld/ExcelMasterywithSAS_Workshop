@@ -14,8 +14,11 @@
 /* 2. CONNECT TO THE EXCEL WORKBOOK  */
 /*************************************/
 
-/* Make a connection to the current emp_info.xlsx workbook */
-libname xl xlsx "&path/data/&currMonthYear._emp_info_raw.xlsx";
+/* Make a connection to the current <YYYY>M<MM>_emp_info_raw.xlsx workbook */
+*libname xl xlsx "&data_path/&currMonthYear._emp_info_raw.xlsx";
+
+/* Make a connection to the 2024M04_emp_info_raw.xlsx file for workshop */
+libname xl xlsx "&data_path/2024M04_emp_info_raw.xlsx";
 
 
 
@@ -80,15 +83,6 @@ create table work.emp_info_all as
 	    left join xl.salary as sal on emp.idnum = sal.idnum
 	    left join xl.leave as leave on emp.idnum = leave.idnum
 	order by Division, Salary;
-
-
-	/* Count number of rows in final table */
-	select count(*) as NumRows_Final_Table from work.emp_info_all;
-
-
-	/* View final table */
-	title "FINAL EMP_INFO_ALL TABLE";
-	select * from work.emp_info_all(obs=10);
 quit;
 
 
@@ -106,9 +100,3 @@ run;
 proc sort data = work.emp_leave;
 	by descending LVBEGDTE;
 run;
-
-/* View leave table */
-title "PREVIEW WORK.EMP_LEAVE TABLE";
-proc print data = work.emp_leave;
-run;
-title;

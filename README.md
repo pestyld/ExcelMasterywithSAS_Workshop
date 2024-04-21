@@ -7,15 +7,16 @@
 Join us for an immersive experience where data mastery meets reporting excellence! Discover the art of seamlessly reading and writing Excel data with SAS, unlocking a realm of possibilities. From Excel data ingestion to crafting dynamic reports in Excel using SAS, this session empowers you to navigate the convergence of SAS and Excel. Learn efficient SAS techniques to harness the power of both tools, ensuring a seamless workflow for comprehensive data analysis and reporting. Elevate your skills and gain the expertise needed to unleash the full potential of SAS in creating impactful Excel reports. 
 
 ## Setup
-1. Open the **date** > **cre8data.sas** program. Modify the **data_path** macro variable to reference your **data** folder. Save and run the program. This will create an Excel workbook name using the current year and month *(YYYYMMM_emp_info_raw.xlsx)*. The program in this project will use the current year and month to try and reference the most recent Excel workbook. You will have to create that workbook with this script.
-2. You will also have to modify **path** macro variable in the **development** > **00_config.sas** program to reference the location of your main project folder.
-3. You will also have to modify **folder_path** macro variable in the **production** > **create_excel_workbook.sas** program to reference the location of your main project folder.
+1. You will also have to modify **path** macro variable in the **development** > **00_config.sas** program to reference the location of this main project folder.
+2. You will also have to modify **folder_path** macro variable in the **production** > **create_excel_workbook.sas** program to reference the location of this main project folder.
 
 ## Folder descriptions
 
 ### data 
-- The **data** folder contains the program to create the raw data (**cre8data.sas**), the raw Excel workbook used in the demonstration, and the **report_overview_config.xlsx** file. 
-- The **report_overview_config.xlsx** workbook stores information about the report and is used to create on of the worksheets. 
+The **data** folder contains the following:
+1. The program to create the raw data for the workshop (**cre8data.sas**). You do not need to run this program as the Excel file is already created.
+2. The raw Excel workbook used in the demonstration (**2024M04_emp_info_raw.xlsx**). This is the input data required for the workshohp.
+3. The **report_overview_config.xlsx** file. This workbook stores information about the report and is used to store report overview information for the workbook and worksheets.
 
 ### development
 The **development** folder will contain programs for the entire process. 
@@ -28,3 +29,6 @@ The **development** folder will contain programs for the entire process.
 - The Modify the **folder_path** macro variable in the **create_excel_workbook.sas** program to point to the project folder. 
 - The programs from development are placed in the **production** > **programs** folder. Minor modifications were made to the programs to create a single Excel workbook.
 - The final workbook will be placed in the **production** > **output** folder.
+
+### Final Note
+- The last worksheet creates a schedule plot. The schedule plot uses a static data for the reference line. However, the data label is dynamic, and will always be the date you run the programs. This is done to show that if the data was updated on the backend, you can dynamically update the visualization.

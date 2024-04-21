@@ -14,7 +14,11 @@
 /* 2. CONNECT TO THE EXCEL WORKBOOK  */
 /*************************************/
 /* Make a connection to the current <YYYY>M<MM>_emp_info_raw.xlsx workbook */
-libname xl xlsx "&data_path/&currMonthYear._emp_info_raw.xlsx";
+/* This code would be used if you had a new input Excel workbook every month. */ 
+*libname xl xlsx "&data_path/&currMonthYear._emp_info_raw.xlsx";
+
+/* (Static connection) Make a connection to the 2024M04_emp_info_raw.xlsx file for workshop */
+libname xl xlsx "&data_path/2024M04_emp_info_raw.xlsx";
 
 
 
