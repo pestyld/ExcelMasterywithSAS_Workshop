@@ -31,4 +31,4 @@ The **development** folder will contain programs for the entire process.
 - The final workbook will be placed in the **production** > **output** folder.
 
 ### Final Note
-- The last worksheet creates a schedule plot. The schedule plot uses a static data for the reference line. However, the data label is dynamic, and will always be the date you run the programs. This is done to show that if the data was updated on the backend, you can dynamically update the visualization.
+- The last worksheet creates a schedule plot. The schedule plot uses a static date for the reference line. However, the data label is dynamic, and will always be the date you run the program. **So the reference line and the date will not match**. This is done to show that if the data was updated on the backend, you can dynamically update the visualization. In this scenario, the data is static.
