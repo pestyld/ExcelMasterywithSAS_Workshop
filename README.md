@@ -6,6 +6,15 @@
 ## Description
 Join us for an immersive experience where data mastery meets reporting excellence! Discover the art of seamlessly reading and writing Excel data with SAS, unlocking a realm of possibilities. From Excel data ingestion to crafting dynamic reports in Excel using SAS, this session empowers you to navigate the convergence of SAS and Excel. Learn efficient SAS techniques to harness the power of both tools, ensuring a seamless workflow for comprehensive data analysis and reporting. Elevate your skills and gain the expertise needed to unleash the full potential of SAS in creating impactful Excel reports. 
 
+## Introduction
+You will learn how to
+- Import data from Excel workbooks and generate SAS tables.
+- Prepare the imported worksheets using PROC SQL.
+- Generate reports using SAS procedures including PROC SQL, SGPLOT, and others.
+- Construct Excel worksheets leveraging SAS ODS EXCEL and its diverse options.
+- Dynamically assemble a final production-grade project for automated creation of Excel reports.
+
+
 ## Setup
 1. You will also have to modify **path** macro variable in the **development** > **00_config.sas** program to reference the location of this main project folder.
 2. You will also have to modify **folder_path** macro variable in the **production** > **create_excel_workbook.sas** program to reference the location of this main project folder.
