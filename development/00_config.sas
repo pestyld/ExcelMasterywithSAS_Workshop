@@ -6,7 +6,7 @@
 /* REQUIREMENT: SPECIFY MAIN FOLDER PATH ONLY  */
 /***********************************************/
 /* REQUIREMENT: Specify the path to your main workshop folder */
-%let path = C:/your/project/location/ExcelMasterywithSAS_Workshop;
+%let path = /*Enter path to main workshop folder */;
 
 
 

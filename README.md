@@ -1,4 +1,4 @@
-# Excel Mastery with SAS: Unlocking Data Insights and Dynamic Reporting
+# Excel Proficiency with SAS: Unlocking Data Insights and Dynamic Reporting
 
 ## Requirements
 - Access to SAS9 or SAS Viya
